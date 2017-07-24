@@ -1,6 +1,6 @@
 function Map(){
     var _geo=[];
-
+    var _multiShootings=[];
     var _circleStyle ={
         color: 'red',
         fillColor: '#f03',
@@ -39,15 +39,15 @@ function Map(){
         var shootingCircles = Array.from(arr,function(d){
             if(d.time.getYear()==117){
                 d.circle = L.circle(JSON.parse(d.location),_circleStyle)
-                    .bindPopup("Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
+                    .bindPopup("People Involved: " + d.num + "<br/>Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer17.addLayer(d.circle);
             } else if(d.time.getYear()==116){
                 d.circle = L.circle(JSON.parse(d.location),_circleStyle2)
-                    .bindPopup("Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
+                    .bindPopup("People Involved: " + d.num + "Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer16.addLayer(d.circle);
             } else if(d.time.getYear()==115){
                 d.circle = L.circle(JSON.parse(d.location),_circleStyle3)
-                    .bindPopup("Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
+                    .bindPopup("People Involved: " + d.num + "Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer15.addLayer(d.circle);
             }
         });
@@ -180,9 +180,9 @@ function Map(){
         }
     }
 
-    exports.style = function(_){
-        if(!arguments.length) return _circleStyle;
-        _circleStyle = _;
+    exports.multiShootings = function(_){
+        if(!arguments.length) return _multiShootings;
+        _multiShootings = _;
         return this;
     }
     exports.geoData = function(_){

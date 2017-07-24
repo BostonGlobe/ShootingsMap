@@ -26,8 +26,29 @@
             .defer(d3.json, 'assets/bos_neighborhoods.json')
             .defer(d3.json, 'https://data.cityofboston.gov/resource/29yf-ye7n.json?shooting=Y&$limit=50000')
             .await(function(err, geo, data){
-                var MapA= Map().geoData(geo);
+                //get and parse data
                 var shootingData = data.map(parseJson);
+                //Data processing shooting nested by Id
+                var shootingNested = d3.nest()
+                    .key(function(d) { return d.id; })
+                    .rollup(function(leaves) { return leaves.length; })
+                    .entries(shootingData);
+
+                //get multiShootings
+                //add shooting numbers to per incident
+                shootingData.forEach(function (shooting) {
+                    shooting.num=1;
+                    for (var j in shootingNested){
+                        if(shootingNested[j].key == shooting.id){
+                            shooting.num= shootingNested[j].value;
+                            return;
+                        }
+                    }
+                });
+                console.log(shootingData);
+
+                //init map
+                var MapA= Map().geoData(geo).multiShootings(shootingData);
                 d3.select('#mapid').datum(shootingData).call(MapA);
                 var num = shootingData.length;
                 var num2017= shootingData.filter(function(d){ return d.time.getYear()==117}).length;
