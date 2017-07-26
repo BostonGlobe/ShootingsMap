@@ -45,7 +45,6 @@
                         }
                     }
                 });
-                console.log(shootingData);
 
                 //init map
                 var MapA= Map().geoData(geo).multiShootings(shootingData);

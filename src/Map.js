@@ -19,12 +19,13 @@ function Map(){
         fillOpacity: 0.1,
         radius: 50
     };
-    var map;
+
     var exports = function(selection){
         //Set the map!
         console.log('Set the Map');
         var arr = selection.datum();
         var mapid = 'mapid';
+        var map;
         var current_position, current_accuracy,
             autoLocate=true;
 
@@ -43,11 +44,11 @@ function Map(){
                 circleLayer17.addLayer(d.circle);
             } else if(d.time.getYear()==116){
                 d.circle = L.circle(JSON.parse(d.location),_circleStyle2)
-                    .bindPopup("People Involved: " + d.num + "Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
+                    .bindPopup("People Involved: " + d.num + "<br/>Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer16.addLayer(d.circle);
             } else if(d.time.getYear()==115){
                 d.circle = L.circle(JSON.parse(d.location),_circleStyle3)
-                    .bindPopup("People Involved: " + d.num + "Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
+                    .bindPopup("People Involved: " + d.num + "<br/>Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer15.addLayer(d.circle);
             }
         });
@@ -55,28 +56,27 @@ function Map(){
             style: style,
             onEachFeature: onEachFeature
         });
-
-        if(!map){
             map = L.map(mapid, {
                 center: [42.323, -71.072],
                 zoom: 12,
                 layers: [streetMap, geojson, circleLayer15, circleLayer16, circleLayer17],
                 scrollWheelZoom: false
             });
-        }
+
 
         var baseMaps = {
             "Street": streetMap
         };
 
         var overlayMaps = {
-            "<span style='color: #eac500'>♦ </span>2015": circleLayer15,
-            "<span style='color: #e17a0d'>♦ </span>2016": circleLayer16,
-            "<span style='color: red'>♦ </span>2017": circleLayer17
+            "<span style='color: #eac500'> █  </span> 2015": circleLayer15,
+            "<span style='color: #e17a0d'> █  </span> 2016": circleLayer16,
+            "<span style='color: red'> █  </span> 2017": circleLayer17
         };
 
 
         L.control.layers(baseMaps, overlayMaps, {
+            collapsed: false,
             sortLayers:false,
             hideSingleBase: true
         }).addTo(map);
