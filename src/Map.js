@@ -33,7 +33,6 @@ function Map(){
             id: 'mapbox.street',
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         });
-
         var circleLayer15 = new L.FeatureGroup();
         var circleLayer16 = new L.FeatureGroup();
         var circleLayer17 = new L.FeatureGroup();
@@ -63,6 +62,12 @@ function Map(){
                 scrollWheelZoom: false
             });
 
+            //add location button
+        L.easyButton('<img src="https://unpkg.com/leaflet@1.0.3/dist/images/marker-icon.png" width="15px"/>', function(btn, map){
+            map.locate();
+            map.on('locationerror', onLocationError);
+            map.on('locationfound', onLocationFound);
+        }).addTo(map);
 
         var baseMaps = {
             "Street": streetMap
@@ -78,12 +83,12 @@ function Map(){
         L.control.layers(baseMaps, overlayMaps, {
             collapsed: false,
             sortLayers:false,
-            hideSingleBase: true
+            hideSingleBase: true,
         }).addTo(map);
 
-        map.locate();
-        map.on('locationerror', onLocationError);
-        map.on('locationfound', onLocationFound);
+        // map.locate();
+        // map.on('locationerror', onLocationError);
+        // map.on('locationfound', onLocationFound);
 
         function getTime(time) {
             var timeStr = time.toString().split(' ');

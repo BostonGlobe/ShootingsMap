@@ -9,6 +9,7 @@
 
 	};
 
+
 	// called automatically on article page resize
 	window.onResize = function(width) {
 
@@ -22,11 +23,14 @@
 
 	// graphic code
     $(document).ready(function(){
+
         d3.queue()
             .defer(d3.json, 'assets/bos_neighborhoods.json')
+            //.defer(d3.json, 'https://data.cityofboston.gov/resource/29yf-ye7n.json?shooting=Y&$limit=50000')
             .defer(d3.json, 'https://data.cityofboston.gov/resource/29yf-ye7n.json?shooting=Y&$limit=50000')
             .await(function(err, geo, data){
                 //get and parse data
+                console.log(data[0]);
                 var shootingData = data.map(parseJson);
                 //Data processing shooting nested by Id
                 var shootingNested = d3.nest()
@@ -51,6 +55,38 @@
                 d3.select('#mapid').datum(shootingData).call(MapA);
                 var num = shootingData.length;
                 var num2017= shootingData.filter(function(d){ return d.time.getYear()==117}).length;
+               //
+               // var cf = crossfilter(shootingData);
+               //  var databyhour = cf.dimension(function (d) {
+               //      return d.hour;
+               //  });
+               //  var divWidth = d3.select('#cChartHour').node().clientWidth;
+               //  console.log(divWidth);
+               //  var myChart = barChart()
+               //      .dimension(databyhour)
+               //      .group(databyhour.group())
+               //      .x(d3.scaleLinear()
+               //          .domain([0, 24])
+               //          .rangeRound([10,divWidth-10]))
+               //      .barWidth(12);
+               //  d3.select('#cChartHour').call(myChart);
+               //
+               //
+               //  var databyMonth = cf.dimension(function (d) {
+               //      return d.time.getMonth();
+               //  });
+               //  var divWidth = d3.select('#cChartMonth').node().clientWidth;
+               //  console.log(divWidth);
+               //  var myChart = barChart()
+               //      .dimension(databyhour)
+               //      .group(databyhour.group())
+               //      .x(d3.scaleLinear()
+               //          .domain([0, 12])
+               //          .rangeRound([10,divWidth-10]))
+               //      .barWidth(12);
+               //
+               //  d3.select('#cChartMonth').call(myChart);
+
             });
 
 
@@ -62,7 +98,8 @@
                 street:d.street,
                 description:d.offense_description,
                 time:parseTime(d.occurred_on_date),
-                location: d.location.coordinates?('['+d.location.coordinates[1]+','+d.location.coordinates[0]+']'):[0,0]
+                location: d.location.coordinates?('['+d.location.coordinates[1]+','+d.location.coordinates[0]+']'):[0,0],
+                hour: +d.hour
             }
         }
         function parseCSV(d){
@@ -104,13 +141,6 @@
         }
 
     });
-
-
-
-
-
-
-
 
 
 	// run code

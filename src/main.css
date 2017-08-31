@@ -38,6 +38,33 @@
 		min-height:400px;
 	}
 }
+.easy-button-button .button-state{
+	display: block;
+	width: 150%;
+	position: relative;
+	right: 5%;
+}
+
+#cChartMonth{
+	width: 45%;
+	height: 200px;
+	margin: 10px;
+	float: left;
+}
+#cChartHour{
+	width: 45%;
+	height: 200px;
+	margin: 10px;
+	float: left;
+}
+.foreground.bar {
+	 fill: steelblue;
+	 stroke-width: 0;
+ }
+.background.bar {
+	fill: #ccc;
+	stroke-width: 0;
+}
 /*.leaflet-top.leaflet-right{*/
 	/*display:none;*/
 /*}*/
