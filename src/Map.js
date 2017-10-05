@@ -38,15 +38,15 @@ function Map(){
         var circleLayer17 = new L.FeatureGroup();
         var shootingCircles = Array.from(arr,function(d){
             if(d.time.getYear()==117){
-                d.circle = L.circle(JSON.parse(d.location),_circleStyle)
+                d.circle = L.circle(d.location,_circleStyle)
                     .bindPopup("People Involved: " + d.num + "<br/>Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer17.addLayer(d.circle);
             } else if(d.time.getYear()==116){
-                d.circle = L.circle(JSON.parse(d.location),_circleStyle2)
+                d.circle = L.circle(d.location,_circleStyle2)
                     .bindPopup("People Involved: " + d.num + "<br/>Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer16.addLayer(d.circle);
             } else if(d.time.getYear()==115){
-                d.circle = L.circle(JSON.parse(d.location),_circleStyle3)
+                d.circle = L.circle(d.location,_circleStyle3)
                     .bindPopup("People Involved: " + d.num + "<br/>Street: " + d.street+"<br/>Description: " + d.description.toLowerCase()+ "<br/>Time: "+getTime(d.time)  );
                 circleLayer15.addLayer(d.circle);
             }
